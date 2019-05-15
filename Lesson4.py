@@ -103,7 +103,7 @@ def primes():
 		yield n
 		it = filter(_not_divisible(n), it)
 
-#打印1000以内的素数
+#打印1000以内的素数R
 for n in primes():
 	if n < 1000:
 		print(n)
