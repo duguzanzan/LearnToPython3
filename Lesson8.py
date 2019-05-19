@@ -99,6 +99,126 @@ print(10 / n)
 '''
 
 
+'Make a Dict'
+class Dict(dict):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(r"'Dict' object has no attribute '%s'" % key)
+    def __setattr__(self, key, value):
+        self[key] = value
+
+d = Dict(a = 1, b = 2)
+print(d['a'])
+print(d.b)
+
+'Make a Tool for text Dict'
+import unittest
+
+class TextDict(unittest.TestCase):
+    def  text_init(self): #以test开头的方法就是测试方法，不以test开头的方法不被认为是测试方法，测试的时候不会被执行
+        d = Dict(a=1, b='test')
+        self.assertEqual(d.a, 1) # 断言函数返回的结果与1相等
+        self.assertEqual(d.b, 'test')
+        self.assertTrue(isinstance(d, dict))
+
+    def test_key(self):
+        d = Dict()
+        d['key'] = 'value'
+        self.assertEqual(d.key, 'value')
+
+    def test_attr(self):
+        d = Dict()
+        d.key = 'value'
+        self.assertTrue('key' in d)
+        self.assertEqual(d['key'], 'value')
+
+    def test_keyerror(self):
+        d = Dict()
+        with self.assertRaises(KeyError): #期待抛出指定类型的Error
+            value = d['empty']
+
+    def test_attrerror(self):
+        d = Dict()
+        with self.assertRaises(AttributeError): #通过d.empty访问不存在的key时，我们期待抛出AttributeError
+            value = d.empty
+
+#Practice
+class Student(object):
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+    def get_grade(self):
+        if self.score > 100 or self.score < 0:
+            raise ValueError
+        if self.score >= 60 and self.score < 80:
+            return 'B'
+        if self.score >= 80:
+            return 'A'
+        return 'C'
+
+
+class TestStudent(unittest.TestCase):
+
+    def test_80_to_100(self):
+        s1 = Student('Bart', 80)
+        s2 = Student('Lisa', 100)
+        self.assertEqual(s1.get_grade(), 'A')
+        self.assertEqual(s2.get_grade(), 'A')
+
+    def test_60_to_80(self):
+        s1 = Student('Bart', 60)
+        s2 = Student('Lisa', 79)
+        self.assertEqual(s1.get_grade(), 'B')
+        self.assertEqual(s2.get_grade(), 'B')
+
+    def test_0_to_60(self):
+        s1 = Student('Bart', 0)
+        s2 = Student('Lisa', 59)
+        self.assertEqual(s1.get_grade(), 'C')
+        self.assertEqual(s2.get_grade(), 'C')
+
+    def test_invalid(self):
+        s1 = Student('Bart', -1)
+        s2 = Student('Lisa', 101)
+        with self.assertRaises(ValueError):
+            s1.get_grade()
+        with self.assertRaises(ValueError):
+            s2.get_grade()
+
+# if __name__ == '__main__':
+#     unittest.main()
+
+
+'文档测试'
+
+
+def fact(n):
+    '''
+    Calculate 1*2*...*n
+
+    >>> fact(1)
+    1
+    >>> fact(10)
+    3628800
+    >>> fact(-1)
+    Traceback (most recent call last):
+      ...
+    ValueError
+    '''
+    if n < 1:
+        raise ValueError()
+    if n == 1:
+        return 1
+    return n * fact(n - 1)
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
 
 
 
