@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="shortcut icon" href="bitbug_favicon.ico"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            width: 200px;
+            height: 100px;
+            background-color: purple;
+        }
+        nav {
+            /*width: 300px;*/
+            height: 100px;
+            background-color: pink;
+            padding: 20px;
+        }
+        nav li {
+            float: left;
+            list-style: none;
+            height: 40px;
+            line-height: 40px;
+            margin-left: 25px;
+        }
+        nav li a {
+            display: block;
+            height: 40px;
+            font-size: 18px;
+            padding: 0 10px;
+            color: #ccc;
+        }
+        nav li a:hover {
+            border-bottom: 2px solid #00a4ff;
+        }
+        aside {
+            width: 100px;
+            height: 300px;
+            background-color: skyblue;
+        }
+        .box {
+            width: 600px;
+            border: 1px solid #ccc;
+            margin: 0 auto;
+        }
+        .box dl {
+            overflow: hidden;
+        }
+        .box dl dt, .box dl dd{
+            float: left;
+        }
+        .box dl dt {
+            width: 100px;
+        }
+        .box dl dd {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<form action="">
+    <div class="box">
+        <dl>
+            <dt>您的邮箱</dt>
+            <dd><input type="email" autofocus="autofocus"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>手机号码</dt>
+            <dd><input type="tel" required accesskey="s"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>网址</dt>
+            <dd><input type="url"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>邮政编码</dt>
+            <dd><input type="number"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>拖动滑块</dt>
+            <dd><input type="range"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>时间</dt>
+            <dd><input type="time"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>出生日期</dt>
+            <dd><input type="date"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>时间</dt>
+            <dd><input type="datetime"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>月份</dt>
+            <dd><input type="month"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>星期</dt>
+            <dd><input type="week"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt>常住地</dt>
+            <dd><input type="text"></dd>
+            <dd>* 注册后不可更改</dd>
+        </dl>
+        <dl>
+            <dt></dt>
+            <dd><input type="submit" value="提交"> <input type="reset" value="重置"> <input type="file" multiple></dd>
+        </dl>
+    </div>
+</form>
+<input type="text" value="" placeholder="请输入明星" list="star"/>
+<datalist id="star">
+    <option value="陈奕迅">陈奕迅</option>
+    <option value="周杰伦">周杰伦</option>
+    <option value="王力宏">王力宏</option>
+    <option value="陶吉吉">陶吉吉</option>
+</datalist>
+<fieldset>
+    <legend>用户登录</legend>
+    用户名：<input type="text"> <br/>
+    密&nbsp;&nbsp;&nbsp;码：<input type="password">
+</fieldset>
+<header></header>
+<nav>
+    <ul>
+        <li><a href="#">首页</a></li>
+        <li><a href="#">课程</a></li>
+        <li><a href="#">职业规划</a></li>
+    </ul>
+</nav>
+<aside>aside</aside>
+<article>aricle</article>
+<time>15:44</time>
+<iframe src="//player.bilibili.com/player.html?aid=39707496&cid=69755492&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+</body>
+</html>
