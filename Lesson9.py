@@ -192,8 +192,102 @@ environ({'PATH': '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'PYDEVD_LOAD_VA
 
 '''
 
+#Practice
+'利用os模块编写一个能实现dir -l输出的程序'
+'''
+import os,time
+
+def time_format(x):
+    return time.asctime(time.localtime(x))
+
+def cmd_dir():
+    path = os.path.abspath('.')
+    dir_and_file = [x for x in os.listdir('.')]
+    gettime = list(map(time_format,map(os.path.getatime,dir_and_file)))
+    getsize = list(map(os.path.getsize,dir_and_file))
+    n = 0
+    while n < len(dir_and_file):
+        print(gettime[n], '==>', getsize[n], '==>', dir_and_file[n])
+        n += 1
+
+def findstr(path,st):
+    for x in os.listdir(path):
+        if os.path.isdir(x):
+            new_path = os.path.join(path,x)
+            findstr(new_path,st)
+        elif st in os.path.splitext(x)[0]:
+            print("相关文件名:%s,相对路径:%s" % (x,os.path.relpath(path)))
+
+
+if __name__ == '__main__':
+    f = os.path.abspath('.')
+    text = input("input:")
+    findstr(f,text)
+
+'''
 
 '序列化'
+'pickle模块实现序列化'
+
+'''
+>>> import pickle
+>>> d = dict(name = 'Bob', age = 26, score = 90)
+>>> pickle.dumps(d) #pickle.dumps()把任意对象序列化成一个bytes
+    b'\x80\x03}q\x00(X\x04\x00\x00\x00nameq\x01X\x03\x00\x00\x00Bobq\x02X\x03\x00\x00\x00ageq\x03K\x1aX\x05\x00\x00\x00scoreq\x04KZu.'
+>>> f = open('dump.txt', 'wb')
+>>> pickle.dump(d, f) #pickle.dump()直接把对象序列化后写入一个file-like Object
+>>> f.close()
+>>> f = open('dump.txt', 'rb')
+>>> d = pickle.load(f) #pickle.load()从一个file-like Object中直接反序列化出对象
+>>> f.close()
+>>> d
+    {'name': 'Bob', 'age': 26, 'score': 90}
+'''
+
+
+'JSON'
+
+'''
+>>> import json
+>>> json.dumps(d) #dumps()返回一个str,dump()把json写入一个file-like Object
+'{"name": "Bob", "age": 26, "score": 90}'
+'''
+
+import json
+
+class Student(object):
+    def __init__(self, name, age, score):
+        self.name = name
+        self.age = age
+        self.score = score
+    def student2dict(self):
+        return {
+            'name':self.name,
+            'age':self.age,
+            'score':self.score
+        }
+
+def Student2dict(std):
+    return {
+        'name': std.name,
+        'age': std.age,
+        'score': std.score
+    }
+
+s = Student('Bob',26,90)
+print(json.dumps(s.student2dict()))
+print(json.dumps(s, default=Student2dict))
+print(json.dumps(s, default=lambda obj: obj.__dict__))
+'因为通常class的实例都有一个__dict__属性，他就是一个dict'
+def dict2student(d):
+    return Student(d['name'], d['age'], d['score'])
+jsonStr = json.dumps(s, default=Student2dict)
+print(json.loads(jsonStr, object_hook=dict2student))
+
+
+#Practice
+obj = dict(name = '小明', age = 20)
+print(json.dumps(obj, ensure_ascii=True)) #汉字转为unicode编码
 
 
 
