@@ -146,6 +146,15 @@ Hello, Bob(in Thread-B)
 
 
 
+'分布式进程'
+'Thread和Process中赢首选Process，因更稳定'
+'Process可以分部到多台机器上，而Thread最多只能分布到同一台机器的多个CPU上'
+
+'multiprocessing模块中的子模块managers支持把多线程分布到多台机器上'
+
+'Python的分布式进程接口简单，封装良好，适合需要把繁重任务分布到多台机器的环境下'
+
+'注意Queue的作用是用来传递任务和接受结果，每个任务的描述数量都要尽量小。传指针，不传data'
 
 
 
