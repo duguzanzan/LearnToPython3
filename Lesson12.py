@@ -90,6 +90,29 @@ __author__ = 'DeRozan'
 # ('010', '8086')
 
 
+#Practice
+
+import re
+
+'验证Email地址'
+def is_valid_email(addr):
+    return re.match(r'^\w+[0-9|a-z|A-Z|.]+@[\w|\d]+\.com$',addr)
+
+assert is_valid_email('someone@gmail.com')
+assert is_valid_email('bill.gates@microsoft.com')
+assert not is_valid_email('bob#example.com')
+assert not is_valid_email('mr-bob@example.com')
+print('ok')
+
+'可以提取出名字的Email地址'
+def name_of_email(addr):
+    array = re.split(r'[\>\@]',addr.replace('<',''))
+    return array[0]
+
+assert name_of_email('<Tom Paris> tom@voyager.org') == 'Tom Paris'
+assert name_of_email('tom@voyager.org') == 'tom'
+print('ok')
+
 
 
 
