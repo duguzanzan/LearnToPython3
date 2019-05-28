@@ -89,6 +89,54 @@ print('line88:',luod)
 
 
 'ChainMap'
+from collections import ChainMap
+import os, argparse
+
+#构造缺省参数
+defaults = {
+    'color':'red',
+    'user':'guest'
+}
+
+#构造命令行参数
+parser = argparse.ArgumentParser()
+parser.add_argument('-u','--user')
+parser.add_argument('-c','--color')
+namespace = parser.parse_args()
+command_line_args = {k:v for k, v in vars(namespace).items() if v}
+
+#组合成ChainMap:
+combined = ChainMap(command_line_args,os.environ, defaults)
+
+print('line111,color=%s' % combined['color'])
+print('line112,user=%s' % combined['user'])
+
+'当传入命令行参数时，优先使用命令行参数：'
+'''
+$ python3 Lesson14.py -u bob
+color=red
+user=bob
+'''
+
+'同时传入命令行参数和环境变量，命令行参数的优先级较高：'
+'''
+$ user=admin color=green python3 use_chainmap.py -u bob
+color=green
+user=bob
+'''
+
+
+'Counter'
+'简单的计数器，统计字符出现个数'
+from collections import  Counter
+
+c = Counter()
+# for ch in 'programming':
+#     c[ch] = c[ch] + 1
+c.update('programming')
+
+print('line138:', c)
+print('line139:',Counter('PROGRAMMING'))
 
 
 
