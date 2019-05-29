@@ -77,6 +77,107 @@ md5 = hashlib.md5()
 md5.update('how to use md5 in python hashlib?'.encode('utf-8'))
 print('line78:', md5.hexdigest())
 
+md5_section = hashlib.md5()
+md5_section.update('how to use md5'.encode('utf-8'))
+md5_section.update(' in python hashlib?'.encode(('utf-8')))
+print('line83:', md5_section.hexdigest())
+'分块多次调用update(),最后的结果是一样的'
+
+'MD5生成结果是固定的128bit字节，通常用一个32位16进制字符串表示'
+'SHA1的结果是160bit字节，通常用一个40位16进制字符串表示'
+'比SHA1更安全的算法是SHA256和SHA512,不过越安全的算法不仅越慢，而且摘要长度越长'
+
+
+'摘要算法应用'
+db = {
+    'michael': 'e10adc3949ba59abbe56e057f20f883e',
+    'bob': '878ef96e86145580c38c87f0410ad153',
+    'alice': '99b1c2188db85afee403b1536010c2c9'
+}
+
+def login(user,password):
+    pw_md5 = hashlib.md5(password.encode('utf-8'))
+    return pw_md5.hexdigest() == db[user]
+
+assert login('michael', '123456')
+assert login('bob', 'abc999')
+assert login('alice', 'alice2008')
+assert not login('michael', '1234567')
+assert not login('bob', '123456')
+assert not login('alice', 'Alice2008')
+print('ok')
+
+'加盐'
+'由于常用口令的MD5值很容易被计算出来，' \
+'所以，要确保存储的用户口令不是那些被计算出来的常用口令的MD5,' \
+'这一方法通过对原始口令加一个复杂字符串来实现，俗称加盐'
+
+import random
+
+def get_md5(s):
+    return hashlib.md5(s.encode('utf-8')).hexdigest()
+
+class User(object):
+    def __init__(self, username, password):
+        self.username = username
+        self.salt = ''.join([chr(random.randint(48,122)) for i in range(20)])
+        self.password = get_md5(password + self.salt)
+
+db = {
+    'michael': User('michael', '123456'),
+    'bob': User('bob', 'abc999'),
+    'alice': User('alice', 'alice2008')
+}
+
+def login(username, password):
+    user = db[username]
+    return user.password == get_md5(password + user.salt)
+
+assert login('michael', '123456')
+assert login('bob', 'abc999')
+assert login('alice', 'alice2008')
+assert not login('michael', '1234567')
+assert not login('bob', '123456')
+assert not login('alice', 'Alice2008')
+print('ok')
+
+
+'hmac'
+import hmac
+
+message = b'Hello,world!'
+key = b'secret'
+h = hmac.new(key,message,digestmod='MD5')
+print('line151:', h.hexdigest())
+'跟普通hash算法非常类似'
+'需要穿key&message都是bytes类型'
+
+def hmac_md5(key,s):
+    return hmac.new(key.encode('utf-8'),s.encode('utf-8'),digestmod='MD5').hexdigest()
+
+class User(object):
+    def __init__(self, username, password):
+        self.username = username
+        self.key = ''.join(chr(random.randint(48,122)) for i in range(20))
+        self.password = hmac_md5(self.key,password)
+
+db = {
+    'michael': User('michael', '123456'),
+    'bob': User('bob', 'abc999'),
+    'alice': User('alice', 'alice2008')
+}
+
+def login(username,password):
+    user = db[username]
+    return user.password == hmac_md5(user.key,password)
+
+assert login('michael', '123456')
+assert login('bob', 'abc999')
+assert login('alice', 'alice2008')
+assert not login('michael', '1234567')
+assert not login('bob', '123456')
+assert not login('alice', 'Alice2008')
+print('ok')
 
 
 
