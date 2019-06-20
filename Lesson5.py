@@ -100,7 +100,7 @@ def log(text):
 def printDate():
 	print('2019-5-13')
 print(printDate())
-#@log放到now()函数的定义处，相当于执行了：printDate = log(printDate)
+#@log放到printDate()函数的定义处，相当于执行了：printDate = log(printDate)
 #log()是一个decorator
 
 import time, functools

@@ -257,7 +257,7 @@ print('isinstance(iter([]), Iterator):', isinstance(iter([]), Iterator))
 print('isinstance(iter(\'abc\'), Iterator):',isinstance(iter('abc'), Iterator))
 
 #因为Python的Iterator对象表示的是一个数据流，Iterator对象可以被next()函数调用并不断返回下一个数据直到没有数据时抛出StopIteration错误。
-#可以把这个数据流看做一个有序序列，但是不能提前直到序列的长度，只能不断通过next()函数实现按需计算下一个数据，所以Iterator的计算是惰性的，只有在需要返回下一个数据时才会计算
+#可以把这个数据流看做一个有序序列，但是不能提前知道序列的长度，只能不断通过next()函数实现按需计算下一个数据，所以Iterator的计算是惰性的，只有在需要返回下一个数据时才会计算
 #Iterator甚至可以表示一个无限大的数据流，例如全体自然数。而使用list是永远不可以那样做的
 
 
